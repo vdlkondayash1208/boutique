@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vaishnavi Designer Boutique – Luxury Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --maroon:#6B1F2A;
+  --gold:#C9A96E;
+  --gold-light:#E8C882;
+  --gold-dark:#A07840;
+  --beige:#F5EDD8;
+  --cream:#FDF8F0;
+  --soft-pink:#F0C4CB;
+  --rose-gold:#B76E79;
+  --dark:#1A0A0D;
+  --text-dark:#2D1515;
+  --glass:rgba(255,255,255,0.08);
+  --glass-border:rgba(201,169,110,0.3);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:#0D0507;
+  color:var(--cream);
+  font-family:'Lato',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor{
+  width:12px;height:12px;
+  background:var(--gold);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.15s ease,opacity 0.2s;
+  mix-blend-mode:screen;
+}
+#cursor-ring{
+  width:36px;height:36px;
+  border:1.5px solid var(--gold-light);
+  border-radius:50%;
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transition:transform 0.35s ease,width 0.3s,height 0.3s;
+  mix-blend-mode:screen;
+}
+body:hover #cursor{opacity:1;}
+
+/* ── SCROLL PROGRESS ── */
+#scroll-progress{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--maroon),var(--gold),var(--rose-gold));
+  z-index:9997;transition:width 0.1s;
+  box-shadow:0 0 8px var(--gold);
+}
+
+/* ── LOADING SCREEN ── */
+#loader{
+  position:fixed;inset:0;
+  background:#0D0507;
+  z-index:9995;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transition:opacity 0.8s ease, visibility 0.8s;
+}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-logo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.6rem,4vw,2.8rem);
+  color:var(--gold);
+  letter-spacing:0.3em;
+  animation:pulse-gold 1.5s ease-in-out infinite alternate;
+}
+.loader-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;color:var(--rose-gold);
+  letter-spacing:0.6em;margin-top:8px;
+  animation:pulse-gold 1.5s ease-in-out 0.4s infinite alternate;
+}
+.loader-bar{
+  width:200px;height:1px;background:rgba(201,169,110,0.2);
+  margin-top:40px;overflow:hidden;border-radius:2px;
+}
+.loader-bar-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--maroon),var(--gold));
+  animation:load-bar 2s ease forwards;
+}
+@keyframes load-bar{to{width:100%;}}
+@keyframes pulse-gold{from{opacity:0.5;}to{opacity:1;text-shadow:0 0 20px var(--gold);}}
+
+/* ── NAVBAR ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:990;
+  padding:16px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.4s ease;
+}
+nav.scrolled{
+  background:rgba(13,5,7,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--glass-border);
+  padding:12px 5%;
+}
+.nav-logo{
+  font-family:'Cinzel',serif;font-size:1.3rem;
+  color:var(--gold);letter-spacing:0.15em;
+  text-decoration:none;
+}
+.nav-logo span{display:block;font-family:'Cormorant Garamond',serif;font-size:0.65rem;letter-spacing:0.5em;color:var(--rose-gold);font-weight:300;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  color:var(--cream);font-size:0.8rem;letter-spacing:0.18em;
+  text-decoration:none;text-transform:uppercase;
+  transition:color 0.3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--gold);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;gap:1rem;align-items:center;}
+.btn-dark-toggle{
+  background:none;border:1px solid var(--glass-border);
+  color:var(--gold);padding:6px 14px;border-radius:20px;
+  font-size:0.75rem;letter-spacing:0.15em;cursor:none;
+  transition:all 0.3s;font-family:'Lato',sans-serif;
+}
+.btn-dark-toggle:hover{background:var(--gold);color:var(--dark);}
+.nav-cta{
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  color:var(--cream);padding:8px 22px;border:none;border-radius:25px;
+  font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;
+  cursor:none;transition:all 0.3s;font-family:'Lato',sans-serif;
+  text-decoration:none;
+}
+.nav-cta:hover{box-shadow:0 4px 20px rgba(183,110,121,0.5);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;}
+.hamburger span{width:22px;height:1px;background:var(--gold);transition:all 0.3s;}
+
+/* ── HERO ── */
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#hero-canvas{position:absolute;inset:0;z-index:0;}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(107,31,42,0.3) 0%,rgba(13,5,7,0.7) 70%);
+  z-index:1;
+}
+.hero-content{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:0 20px;
+  max-width:900px;
+}
+.hero-eyebrow{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;letter-spacing:0.5em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:1.5rem;
+  animation:fadeUp 1s ease 0.3s both;
+}
+.hero-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.5rem,7vw,6rem);
+  font-weight:600;
+  line-height:1.05;
+  color:var(--cream);
+  text-shadow:0 0 60px rgba(201,169,110,0.3);
+  animation:fadeUp 1s ease 0.5s both;
+}
+.hero-title .gold{
+  color:var(--gold);
+  display:block;
+  font-style:italic;
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.65em;
+  letter-spacing:0.08em;
+}
+.hero-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2.5vw,1.4rem);
+  color:rgba(253,248,240,0.75);
+  margin:1.5rem 0 3rem;
+  letter-spacing:0.05em;
+  font-style:italic;
+  animation:fadeUp 1s ease 0.7s both;
+}
+.hero-btns{
+  display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 1s ease 0.9s both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--maroon),#8B2634);
+  color:var(--cream);padding:16px 40px;
+  border:1px solid rgba(201,169,110,0.4);
+  border-radius:30px;font-size:0.85rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  text-decoration:none;cursor:none;
+  transition:all 0.4s;font-family:'Lato',sans-serif;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  opacity:0;transition:opacity 0.4s;border-radius:30px;
+}
+.btn-primary:hover::before{opacity:1;}
+.btn-primary:hover{box-shadow:0 8px 30px rgba(107,31,42,0.6);transform:translateY(-2px);}
+.btn-primary span{position:relative;z-index:1;}
+.btn-outline{
+  background:transparent;
+  color:var(--gold);padding:16px 40px;
+  border:1px solid var(--gold);
+  border-radius:30px;font-size:0.85rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  text-decoration:none;cursor:none;
+  transition:all 0.4s;font-family:'Lato',sans-serif;
+}
+.btn-outline:hover{background:var(--gold);color:var(--dark);box-shadow:0 8px 30px rgba(201,169,110,0.4);transform:translateY(-2px);}
+.hero-scroll{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:fadeUp 1s ease 1.2s both;
+}
+.hero-scroll span{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scroll-pulse 2s ease-in-out infinite;}
+@keyframes scroll-pulse{0%,100%{opacity:0.4;transform:scaleY(0.8);}50%{opacity:1;transform:scaleY(1);}}
+
+/* ── PARTICLES CANVAS ── */
+#particles-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ── SECTIONS GENERAL ── */
+section{position:relative;z-index:2;}
+.section-header{text-align:center;margin-bottom:4rem;}
+.section-tag{
+  font-size:0.7rem;letter-spacing:0.5em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:1rem;display:block;
+  font-family:'Lato',sans-serif;
+}
+.section-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  color:var(--cream);margin-bottom:1rem;
+}
+.section-divider{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0 auto 1.5rem;
+}
+.section-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;color:rgba(253,248,240,0.6);
+  font-style:italic;max-width:600px;margin:0 auto;
+}
+
+/* ── ABOUT ── */
+#about{
+  padding:100px 5%;
+  background:linear-gradient(180deg,#0D0507 0%,#140A0D 50%,#0D0507 100%);
+}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;max-width:1200px;margin:0 auto 5rem;
+}
+.about-text h2{
+  font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+  color:var(--gold);margin-bottom:1.5rem;
+}
+.about-text p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;line-height:1.9;
+  color:rgba(253,248,240,0.75);margin-bottom:1.5rem;
+}
+.about-image-block{
+  position:relative;
+  border-radius:4px;overflow:hidden;
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  aspect-ratio:3/4;
+  display:flex;align-items:center;justify-content:center;
+}
+.about-image-block::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cdefs%3E%3Cpattern id='p' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='10' cy='10' r='0.5' fill='rgba(201,169,110,0.3)'/%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23p)' width='200' height='200'/%3E%3C/svg%3E");
+  opacity:0.5;
+}
+.about-image-inner{
+  position:relative;z-index:1;text-align:center;
+  font-family:'Cinzel',serif;
+  padding:20px;
+}
+.about-image-icon{
+  font-size:5rem;margin-bottom:1rem;
+  filter:drop-shadow(0 0 20px var(--gold));
+}
+.about-image-inner p{font-size:0.9rem;letter-spacing:0.2em;color:var(--gold);}
+.about-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  margin-top:2rem;
+}
+.stat{
+  text-align:center;padding:1.5rem;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:4px;backdrop-filter:blur(10px);
+}
+.stat-num{
+  font-family:'Cinzel',serif;font-size:2rem;
+  color:var(--gold);display:block;
+}
+.stat-label{font-size:0.7rem;letter-spacing:0.2em;color:rgba(253,248,240,0.6);text-transform:uppercase;}
+
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.5rem;max-width:1200px;margin:0 auto;
+}
+.service-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+  border-radius:8px;padding:2rem 1.5rem;
+  text-align:center;
+  transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  position:relative;overflow:hidden;
+  cursor:none;
+}
+.service-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(107,31,42,0.3),rgba(183,110,121,0.2));
+  opacity:0;transition:opacity 0.4s;border-radius:8px;
+}
+.service-card:hover{transform:translateY(-8px) rotateX(3deg);border-color:var(--gold);}
+.service-card:hover::before{opacity:1;}
+.service-card:hover .service-icon{transform:scale(1.2) rotate(5deg);}
+.service-icon{font-size:2.5rem;margin-bottom:1rem;display:block;transition:transform 0.4s;}
+.service-name{
+  font-family:'Cinzel',serif;font-size:0.9rem;
+  color:var(--gold);letter-spacing:0.1em;margin-bottom:0.5rem;
+}
+.service-desc{font-size:0.8rem;color:rgba(253,248,240,0.6);line-height:1.6;}
+
+/* ── COLLECTIONS ── */
+#collections{
+  padding:100px 5%;
+  background:#0A0408;
+}
+.filter-bar{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.filter-btn{
+  padding:8px 22px;border:1px solid var(--glass-border);
+  background:transparent;color:rgba(253,248,240,0.7);
+  border-radius:25px;font-size:0.75rem;letter-spacing:0.15em;
+  text-transform:uppercase;cursor:none;transition:all 0.3s;
+  font-family:'Lato',sans-serif;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  color:var(--cream);border-color:transparent;
+  box-shadow:0 4px 15px rgba(107,31,42,0.4);
+}
+.collections-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:2rem;max-width:1400px;margin:0 auto;
+}
+.product-card{
+  background:linear-gradient(145deg,rgba(30,10,15,0.9),rgba(20,5,10,0.9));
+  border:1px solid var(--glass-border);
+  border-radius:12px;overflow:hidden;
+  transition:all 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+  cursor:none;
+  position:relative;
+}
+.product-card:hover{
+  transform:translateY(-12px);
+  border-color:var(--gold);
+  box-shadow:0 20px 60px rgba(107,31,42,0.4),0 0 30px rgba(201,169,110,0.1);
+}
+.product-img{
+  aspect-ratio:3/4;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.product-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-size:4rem;gap:0.5rem;
+}
+.product-badge{
+  position:absolute;top:12px;right:12px;
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  color:var(--cream);font-size:0.65rem;letter-spacing:0.15em;
+  padding:4px 10px;border-radius:20px;text-transform:uppercase;
+}
+.product-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(13,5,7,0.95),transparent 60%);
+  opacity:0;transition:opacity 0.4s;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:20px;
+}
+.product-card:hover .product-overlay{opacity:1;}
+.btn-view{
+  background:var(--gold);color:var(--dark);
+  padding:10px 24px;border:none;border-radius:25px;
+  font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;
+  cursor:none;font-family:'Lato',sans-serif;
+  transition:all 0.3s;transform:translateY(10px);
+}
+.product-card:hover .btn-view{transform:translateY(0);}
+.product-info{padding:1.2rem;}
+.product-cat{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;}
+.product-name{font-family:'Cinzel',serif;font-size:1rem;color:var(--cream);margin-bottom:0.4rem;}
+.product-desc{font-size:0.8rem;color:rgba(253,248,240,0.6);margin-bottom:0.8rem;line-height:1.5;}
+.product-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;color:var(--gold);font-weight:500;
+}
+
+/* ── BRIDAL SECTION ── */
+#bridal{
+  padding:100px 5%;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#1A0510 0%,#0D0507 50%,#1A0510 100%);
+}
+#bridal::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(107,31,42,0.4) 0%,transparent 70%);
+}
+.bridal-content{
+  position:relative;z-index:1;
+  text-align:center;margin-bottom:5rem;
+}
+.bridal-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2rem,5vw,4rem);
+  color:var(--gold);margin-bottom:1rem;
+}
+.bridal-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.1rem,2.5vw,1.5rem);
+  font-style:italic;
+  color:rgba(253,248,240,0.8);
+  margin-bottom:3rem;
+}
+.bridal-display{
+  position:relative;
+  width:280px;height:380px;
+  margin:0 auto 4rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.bridal-mannequin{
+  font-size:12rem;
+  filter:drop-shadow(0 0 40px var(--gold)) drop-shadow(0 0 80px rgba(183,110,121,0.5));
+  animation:float-mannequin 4s ease-in-out infinite;
+}
+@keyframes float-mannequin{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-20px) scale(1.03);}
+}
+.sparkles{position:absolute;inset:0;pointer-events:none;}
+.sparkle{
+  position:absolute;width:4px;height:4px;
+  background:var(--gold);border-radius:50%;
+  animation:sparkle-anim 3s ease-in-out infinite;
+}
+@keyframes sparkle-anim{
+  0%,100%{opacity:0;transform:scale(0);}
+  50%{opacity:1;transform:scale(1);}
+}
+.bridal-packages{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:2rem;max-width:1100px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.package-card{
+  background:rgba(20,5,10,0.8);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+  border-radius:12px;padding:2.5rem;
+  text-align:center;
+  transition:all 0.4s;
+  position:relative;overflow:hidden;
+}
+.package-card.featured{
+  border-color:var(--gold);
+  background:rgba(107,31,42,0.2);
+}
+.package-card.featured::before{
+  content:'Most Popular';
+  position:absolute;top:16px;right:-30px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:var(--dark);font-size:0.65rem;letter-spacing:0.15em;
+  padding:4px 40px;text-transform:uppercase;transform:rotate(45deg);
+}
+.package-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(107,31,42,0.4);}
+.package-tier{
+  font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:0.5rem;
+}
+.package-name{
+  font-family:'Cinzel',serif;font-size:1.3rem;color:var(--cream);
+  margin-bottom:1rem;
+}
+.package-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;color:var(--gold);
+  font-weight:600;margin-bottom:1.5rem;
+}
+.package-price span{font-size:1rem;font-weight:300;}
+.package-features{list-style:none;margin-bottom:2rem;}
+.package-features li{
+  font-size:0.85rem;color:rgba(253,248,240,0.7);
+  padding:6px 0;border-bottom:1px solid rgba(201,169,110,0.1);
+}
+.package-features li::before{content:'✦ ';color:var(--gold);}
+
+/* ── FEATURED CAROUSEL ── */
+#featured{padding:100px 5%;background:#0D0507;}
+.carousel-wrapper{position:relative;max-width:1200px;margin:0 auto;overflow:hidden;}
+.carousel-track{
+  display:flex;gap:2rem;
+  transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.featured-card{
+  min-width:calc(33.333% - 1.33rem);
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:12px;overflow:hidden;
+  flex-shrink:0;
+}
+.featured-img{
+  aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+  background:linear-gradient(135deg,rgba(107,31,42,0.4),rgba(183,110,121,0.3));
+  position:relative;
+}
+.featured-info{padding:1.5rem;}
+.featured-info h3{
+  font-family:'Cinzel',serif;font-size:1.1rem;color:var(--cream);margin-bottom:0.5rem;
+}
+.featured-meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin:1rem 0;
+}
+.meta-item{font-size:0.75rem;color:rgba(253,248,240,0.6);}
+.meta-item strong{color:var(--gold);display:block;font-size:0.7rem;letter-spacing:0.1em;}
+.featured-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;color:var(--gold);margin-top:1rem;
+}
+.color-dots{display:flex;gap:6px;margin-top:8px;}
+.color-dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(201,169,110,0.3);cursor:none;}
+.carousel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(107,31,42,0.8);backdrop-filter:blur(10px);
+  border:1px solid var(--glass-border);
+  color:var(--gold);font-size:1.2rem;
+  cursor:none;transition:all 0.3s;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+}
+.carousel-btn:hover{background:var(--maroon);box-shadow:0 0 20px rgba(107,31,42,0.6);}
+.carousel-prev{left:-22px;}
+.carousel-next{right:-22px;}
+
+/* ── TESTIMONIALS ── */
+#testimonials{
+  padding:100px 5%;
+  background:linear-gradient(180deg,#0A0408,#140A0D,#0A0408);
+}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:2rem;max-width:1200px;margin:0 auto;
+}
+.review-card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+  border-radius:12px;padding:2rem;
+  position:relative;
+  transition:all 0.4s;
+}
+.review-card:hover{transform:translateY(-6px);border-color:var(--gold);}
+.quote-mark{
+  font-family:'Cormorant Garamond',serif;
+  font-size:4rem;color:var(--gold);opacity:0.3;
+  line-height:0.6;margin-bottom:1rem;
+}
+.review-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;
+  color:rgba(253,248,240,0.8);line-height:1.8;
+  margin-bottom:1.5rem;
+}
+.review-stars{color:var(--gold);font-size:0.9rem;margin-bottom:1rem;letter-spacing:2px;}
+.reviewer{display:flex;align-items:center;gap:1rem;}
+.reviewer-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;border:1px solid var(--gold);flex-shrink:0;
+}
+.reviewer-name{
+  font-family:'Cinzel',serif;font-size:0.85rem;color:var(--cream);
+}
+.reviewer-loc{font-size:0.72rem;color:rgba(253,248,240,0.5);letter-spacing:0.1em;}
+
+/* ── APPOINTMENT ── */
+#appointment{
+  padding:100px 5%;
+  background:#0D0507;
+  position:relative;
+}
+#appointment::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(107,31,42,0.25) 0%,transparent 70%);
+}
+.appointment-wrapper{
+  max-width:800px;margin:0 auto;
+  position:relative;z-index:1;
+  background:rgba(20,5,10,0.6);
+  backdrop-filter:blur(30px);
+  border:1px solid var(--glass-border);
+  border-radius:16px;padding:3rem;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{
+  font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);
+  text-transform:uppercase;font-family:'Lato',sans-serif;
+}
+.form-input,.form-select,.form-textarea{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(201,169,110,0.25);
+  border-radius:8px;padding:14px 16px;
+  color:var(--cream);font-family:'Cormorant Garamond',serif;
+  font-size:1rem;transition:all 0.3s;
+  cursor:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  outline:none;border-color:var(--gold);
+  background:rgba(201,169,110,0.05);
+  box-shadow:0 0 20px rgba(201,169,110,0.1);
+}
+.form-input::placeholder{color:rgba(253,248,240,0.3);}
+.form-select option{background:#1A0A0D;color:var(--cream);}
+.form-textarea{resize:none;height:120px;}
+.btn-book{
+  width:100%;padding:18px;
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  color:var(--cream);border:none;border-radius:30px;
+  font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.3em;
+  text-transform:uppercase;cursor:none;
+  transition:all 0.4s;margin-top:0.5rem;
+  position:relative;overflow:hidden;
+}
+.btn-book::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:0;height:0;background:rgba(255,255,255,0.1);
+  border-radius:50%;transform:translate(-50%,-50%);
+  transition:width 0.6s,height 0.6s;
+}
+.btn-book:hover::before{width:400px;height:400px;}
+.btn-book:hover{box-shadow:0 10px 40px rgba(107,31,42,0.6);transform:translateY(-2px);}
+
+/* ── CONTACT ── */
+#contact{
+  padding:100px 5%;
+  background:linear-gradient(180deg,#0A0408,#0D0507);
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;max-width:1100px;margin:0 auto;
+}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem;}
+.contact-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);border-radius:10px;
+  padding:1.5rem;display:flex;align-items:center;gap:1.5rem;
+  transition:all 0.3s;
+}
+.contact-card:hover{border-color:var(--gold);transform:translateX(6px);}
+.contact-icon{
+  width:50px;height:50px;border-radius:50%;
+  background:linear-gradient(135deg,var(--maroon),var(--rose-gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.contact-card h4{
+  font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold);
+  letter-spacing:0.1em;margin-bottom:4px;
+}
+.contact-card p,.contact-card a{
+  font-size:0.9rem;color:rgba(253,248,240,0.7);
+  text-decoration:none;transition:color 0.3s;
+}
+.contact-card a:hover{color:var(--gold);}
+.map-placeholder{
+  background:linear-gradient(135deg,rgba(107,31,42,0.3),rgba(183,110,121,0.2));
+  border:1px solid var(--glass-border);border-radius:10px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:1rem;min-height:300px;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;color:rgba(253,248,240,0.5);
+}
+.map-placeholder span{font-size:3rem;}
+.btn-whatsapp{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;padding:14px 28px;border-radius:30px;
+  text-decoration:none;font-size:0.85rem;letter-spacing:0.15em;
+  transition:all 0.3s;cursor:none;
+  margin-top:0.5rem;width:fit-content;
+}
+.btn-whatsapp:hover{box-shadow:0 8px 25px rgba(37,211,102,0.4);transform:translateY(-2px);}
+
+/* ── FOOTER ── */
+footer{
+  background:#080305;
+  padding:60px 5% 30px;
+  position:relative;
+}
+.footer-glow{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--rose-gold),var(--gold),transparent);
+  margin-bottom:50px;
+  box-shadow:0 0 20px var(--gold);
+  animation:glow-line 3s ease-in-out infinite;
+}
+@keyframes glow-line{
+  0%,100%{box-shadow:0 0 10px var(--gold);}
+  50%{box-shadow:0 0 30px var(--gold),0 0 60px rgba(183,110,121,0.5);}
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;margin-bottom:3rem;
+}
+.footer-brand .logo{
+  font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);
+  letter-spacing:0.2em;display:block;margin-bottom:0.3rem;
+}
+.footer-brand .tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--rose-gold);font-size:0.85rem;letter-spacing:0.3em;
+  display:block;margin-bottom:1rem;
+}
+.footer-brand p{
+  font-size:0.85rem;color:rgba(253,248,240,0.5);line-height:1.8;
+}
+.footer-col h4{
+  font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.2em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;
+}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:0.8rem;}
+.footer-links a{
+  font-size:0.85rem;color:rgba(253,248,240,0.5);
+  text-decoration:none;transition:color 0.3s;letter-spacing:0.05em;
+}
+.footer-links a:hover{color:var(--gold);}
+.social-links{display:flex;gap:1rem;margin-top:1.5rem;}
+.social-link{
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;text-decoration:none;
+  transition:all 0.3s;
+}
+.social-link:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px);}
+.footer-bottom{
+  text-align:center;padding-top:2rem;
+  border-top:1px solid rgba(201,169,110,0.1);
+  font-size:0.75rem;color:rgba(253,248,240,0.35);
+  letter-spacing:0.15em;
+}
+
+/* ── FLOATING WHATSAPP ── */
+.floating-wa{
+  position:fixed;bottom:30px;right:30px;z-index:980;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;text-decoration:none;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  animation:float-wa 3s ease-in-out infinite;
+  transition:transform 0.3s;
+}
+.floating-wa:hover{transform:scale(1.15);}
+@keyframes float-wa{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* ── MUSIC TOGGLE ── */
+.music-toggle{
+  position:fixed;bottom:100px;right:32px;z-index:980;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(107,31,42,0.8);backdrop-filter:blur(10px);
+  border:1px solid var(--glass-border);
+  color:var(--gold);font-size:1.1rem;
+  cursor:none;transition:all 0.3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.music-toggle:hover{background:var(--maroon);box-shadow:0 0 20px rgba(107,31,42,0.6);}
+.music-toggle.playing{animation:spin-slow 4s linear infinite;}
+@keyframes spin-slow{to{transform:rotate(360deg);}}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+
+/* ── LIGHT MODE ── */
+body.light-mode{
+  --cream:#1A0A0D;
+  --glass:rgba(107,31,42,0.06);
+  background:#FDF8F0;
+  color:var(--text-dark);
+}
+body.light-mode #hero{background:#f5edd8;}
+body.light-mode nav.scrolled{background:rgba(253,248,240,0.92);}
+body.light-mode .nav-links a{color:var(--text-dark);}
+body.light-mode .section-title{color:var(--text-dark);}
+body.light-mode .review-text{color:var(--text-dark);}
+body.light-mode .hero-title{color:var(--maroon);}
+body.light-mode .hero-subtitle{color:rgba(45,21,21,0.7);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .about-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .featured-card{min-width:calc(100% - 1rem);}
+  .form-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .hero-btns{flex-direction:column;align-items:center;}
+  .bridal-packages{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+  .carousel-btn{display:none;}
+}
+
+/* ── BG GRADIENT BLOBS ── */
+.blob{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);pointer-events:none;z-index:0;
+  animation:blob-move 8s ease-in-out infinite alternate;
+}
+@keyframes blob-move{
+  0%{transform:translate(0,0) scale(1);}
+  100%{transform:translate(30px,20px) scale(1.1);}
+}
+
+/* ── SECTION GLOW DIVIDER ── */
+.glow-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,169,110,0.4),transparent);
+  margin:0 5%;
+}
+
+/* ── Gold shimmer text ── */
+.shimmer-text{
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold-dark));
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% center;}}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Background Particles Canvas -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- Loading Screen -->
+<div id="loader">
+  <div class="loader-logo shimmer-text">Vaishnavi</div>
+  <div class="loader-sub">Designer Boutique</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    Vaishnavi
+    <span>Designer Boutique</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#bridal">Bridal</a></li>
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-dark-toggle" id="themeToggle">☀ Light</button>
+    <a href="#appointment" class="nav-cta">Book Visit</a>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">✦ Est. 2015 ✦ Nellore's Finest ✦</p>
+    <h1 class="hero-title">
+      Vaishnavi
+      <span class="gold">Designer Boutique</span>
+    </h1>
+    <p class="hero-subtitle">Exclusive Bridal, Party Wear &amp; Designer Collections<br>crafted for the extraordinary woman</p>
+    <div class="hero-btns">
+      <a href="#collections" class="btn-primary"><span>✦ Explore Collection</span></a>
+      <a href="#appointment" class="btn-outline">Book Appointment</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-tag">Our Story</span>
+    <h2 class="section-title">Crafted with Passion</h2>
+    <div class="section-divider"></div>
+    <p class="section-sub">Where tradition meets contemporary elegance</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal-left">
+      <h2>A Legacy of <span class="shimmer-text">Luxury Fashion</span></h2>
+      <p>Vaishnavi Designer Boutique is Nellore's most celebrated destination for bridal and designer wear. With over a decade of crafting dreams into reality, we bring together premium fabrics, master artisans, and exclusive designs.</p>
+      <p>From exquisite Kanjeevaram sarees to opulent bridal lehengas, each piece is a testament to our unwavering commitment to quality and artistry. Our expert team offers custom stitching services tailored to your exact vision.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Brides Styled</span></div>
+        <div class="stat"><span class="stat-num">2000+</span><span class="stat-label">Designs</span></div>
+        <div class="stat"><span class="stat-num">10+</span><span class="stat-label">Years</span></div>
+      </div>
+    </div>
+    <div class="about-image-block reveal-right">
+      <div class="blob" style="width:200px;height:200px;background:radial-gradient(var(--maroon),transparent);top:10%;left:10%;opacity:0.6;"></div>
+      <div class="about-image-inner">
+        <div class="about-image-icon">👘</div>
+        <p>Premium Designer Wear</p>
+        <p style="font-size:0.75rem;opacity:0.6;margin-top:4px;letter-spacing:0.1em;font-family:'Cormorant Garamond',serif;font-style:italic;">Where every stitch tells a story</p>
+      </div>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal" style="transition-delay:0s"><span class="service-icon">👰</span><div class="service-name">Bridal Wear</div><div class="service-desc">Opulent lehengas and bridal sarees for your most special day</div></div>
+    <div class="service-card reveal" style="transition-delay:0.1s"><span class="service-icon">✨</span><div class="service-name">Party Wear</div><div class="service-desc">Glamorous outfits for celebrations and special occasions</div></div>
+    <div class="service-card reveal" style="transition-delay:0.2s"><span class="service-icon">🌸</span><div class="service-name">Sarees</div><div class="service-desc">Silk, Kanjeevaram, designer & contemporary drapes</div></div>
+    <div class="service-card reveal" style="transition-delay:0.3s"><span class="service-icon">💃</span><div class="service-name">Lehengas</div><div class="service-desc">Embroidered masterpieces for weddings and festivals</div></div>
+    <div class="service-card reveal" style="transition-delay:0.4s"><span class="service-icon">✂️</span><div class="service-name">Custom Stitching</div><div class="service-desc">Precision tailoring crafted to your unique measurements</div></div>
+    <div class="service-card reveal" style="transition-delay:0.5s"><span class="service-icon">🎀</span><div class="service-name">Kids Wear</div><div class="service-desc">Adorable ethnic and party outfits for little ones</div></div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- COLLECTIONS SECTION -->
+<section id="collections">
+  <div class="section-header reveal">
+    <span class="section-tag">Our Portfolio</span>
+    <h2 class="section-title">Signature Collections</h2>
+    <div class="section-divider"></div>
+    <p class="section-sub">Each piece curated for the discerning woman</p>
+  </div>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="bridal">Bridal</button>
+    <button class="filter-btn" data-filter="saree">Sarees</button>
+    <button class="filter-btn" data-filter="lehenga">Lehengas</button>
+    <button class="filter-btn" data-filter="party">Party Wear</button>
+    <button class="filter-btn" data-filter="kurti">Kurtis</button>
+    <button class="filter-btn" data-filter="gown">Gowns</button>
+    <button class="filter-btn" data-filter="kids">Kids</button>
+  </div>
+  <div class="collections-grid" id="collectionsGrid">
+    <!-- Cards rendered by JS -->
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- BRIDAL SECTION -->
+<section id="bridal">
+  <div class="blob" style="width:400px;height:400px;background:radial-gradient(rgba(107,31,42,0.4),transparent);top:10%;left:50%;transform:translateX(-50%);"></div>
+  <div class="bridal-content reveal">
+    <span class="section-tag">✦ Bridal Atelier ✦</span>
+    <h2 class="bridal-title shimmer-text">Make Your Wedding Look<br>Unforgettable</h2>
+    <p class="bridal-tagline">Because you deserve to feel like royalty on your most precious day</p>
+    <div class="bridal-display">
+      <div class="sparkles" id="sparklesContainer"></div>
+      <div class="bridal-mannequin">👰</div>
+    </div>
+  </div>
+  <div class="bridal-packages">
+    <div class="package-card reveal" style="transition-delay:0s">
+      <div class="package-tier">Silver</div>
+      <div class="package-name">Precious Bride</div>
+      <div class="package-price">₹15,000 <span>onwards</span></div>
+      <ul class="package-features">
+        <li>Bridal Lehenga</li>
+        <li>Dupatta & Blouse</li>
+        <li>2 Alterations</li>
+        <li>3 Days Delivery</li>
+      </ul>
+      <a href="#appointment" class="btn-outline" style="display:inline-block;font-size:0.75rem;padding:10px 24px;">Enquire Now</a>
+    </div>
+    <div class="package-card featured reveal" style="transition-delay:0.15s">
+      <div class="package-tier">Gold</div>
+      <div class="package-name">Royal Bride</div>
+      <div class="package-price">₹35,000 <span>onwards</span></div>
+      <ul class="package-features">
+        <li>Premium Bridal Lehenga</li>
+        <li>Designer Dupatta</li>
+        <li>Custom Blouse Stitching</li>
+        <li>Jewellery Coordination</li>
+        <li>Unlimited Alterations</li>
+      </ul>
+      <a href="#appointment" class="btn-primary" style="display:inline-block;font-size:0.75rem;padding:10px 24px;"><span>Book Package</span></a>
+    </div>
+    <div class="package-card reveal" style="transition-delay:0.3s">
+      <div class="package-tier">Platinum</div>
+      <div class="package-name">Divine Bride</div>
+      <div class="package-price">₹75,000 <span>onwards</span></div>
+      <ul class="package-features">
+        <li>Couture Bridal Set</li>
+        <li>Designer Kanjeevaram Saree</li>
+        <li>Reception Gown</li>
+        <li>Personal Stylist</li>
+        <li>Home Delivery</li>
+        <li>Complimentary Accessories</li>
+      </ul>
+      <a href="#appointment" class="btn-outline" style="display:inline-block;font-size:0.75rem;padding:10px 24px;">Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- FEATURED CAROUSEL -->
+<section id="featured">
+  <div class="section-header reveal">
+    <span class="section-tag">Spotlight</span>
+    <h2 class="section-title">Featured Designs</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="carousel-wrapper">
+    <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+    <div class="carousel-track" id="carouselTrack"></div>
+    <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header reveal">
+    <span class="section-tag">Client Love</span>
+    <h2 class="section-title">What Our Brides Say</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="testimonials-grid" id="testimonialsGrid"></div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- APPOINTMENT BOOKING -->
+<section id="appointment">
+  <div class="section-header reveal">
+    <span class="section-tag">Visit Us</span>
+    <h2 class="section-title">Book an Appointment</h2>
+    <div class="section-divider"></div>
+    <p class="section-sub">Let us bring your dream look to life</p>
+  </div>
+  <div class="appointment-wrapper reveal">
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" placeholder="Your name" type="text"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input class="form-input" placeholder="+91 XXXXX XXXXX" type="tel"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Occasion</label>
+        <select class="form-select">
+          <option value="">Select occasion</option>
+          <option>Wedding / Bridal</option>
+          <option>Engagement</option>
+          <option>Reception</option>
+          <option>Festival / Puja</option>
+          <option>Party / Event</option>
+          <option>Custom Stitching</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Date</label>
+        <input class="form-input" type="date"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Collection</label>
+        <select class="form-select">
+          <option value="">Select collection</option>
+          <option>Bridal Lehengas</option>
+          <option>Designer Sarees</option>
+          <option>Party Wear</option>
+          <option>Gowns</option>
+          <option>Kurtis</option>
+          <option>Kids Wear</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Budget Range</label>
+        <select class="form-select">
+          <option value="">Select range</option>
+          <option>Under ₹10,000</option>
+          <option>₹10,000 – ₹25,000</option>
+          <option>₹25,000 – ₹50,000</option>
+          <option>₹50,000 – ₹1,00,000</option>
+          <option>Above ₹1,00,000</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell us about your dream look, event details, or any special requirements…"></textarea>
+      </div>
+    </div>
+    <button class="btn-book">✦ Book Appointment Now ✦</button>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag">Find Us</span>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal-left">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4>Boutique Address</h4>
+          <p>Vaishnavi Designer Boutique, Main Road,<br>Nellore, Andhra Pradesh – 524001</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Call Us</h4>
+          <a href="tel:+919876543210">+91 98765 43210</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <div>
+          <h4>WhatsApp</h4>
+          <a href="https://wa.me/919876543210" target="_blank">Chat with us instantly</a>
+          <div style="margin-top:8px;">
+            <a href="https://wa.me/919876543210" class="btn-whatsapp">📱 WhatsApp Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📸</div>
+        <div>
+          <h4>Follow on Instagram</h4>
+          <a href="https://instagram.com/vaishnavidesignerboutique" target="_blank">@vaishnavidesignerboutique</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h4>Boutique Hours</h4>
+          <p>Mon–Sat: 10:00 AM – 8:00 PM<br>Sunday: 11:00 AM – 6:00 PM</p>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder reveal-right">
+      <span>🗺️</span>
+      <p>Vaishnavi Designer Boutique<br>Nellore, Andhra Pradesh</p>
+      <a href="https://maps.google.com" target="_blank" class="btn-outline" style="font-size:0.8rem;padding:10px 22px;">Open in Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-glow"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Vaishnavi</span>
+      <span class="tagline">Designer Boutique</span>
+      <p>Nellore's premier destination for bridal and designer fashion. Every stitch crafted with love, every design born from passion.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">👍</a>
+        <a href="#" class="social-link">📌</a>
+        <a href="#" class="social-link">📱</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul class="footer-links">
+        <li><a href="#collections">Bridal Wear</a></li>
+        <li><a href="#collections">Party Wear</a></li>
+        <li><a href="#collections">Designer Sarees</a></li>
+        <li><a href="#collections">Lehengas</a></li>
+        <li><a href="#collections">Gowns</a></li>
+        <li><a href="#collections">Kids Wear</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="#">Custom Stitching</a></li>
+        <li><a href="#">Blouse Design</a></li>
+        <li><a href="#">Alterations</a></li>
+        <li><a href="#">Styling Advice</a></li>
+        <li><a href="#appointment">Appointments</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#bridal">Bridal Special</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    ✦ © 2025 Vaishnavi Designer Boutique, Nellore · Crafted with ❤️ · All Rights Reserved ✦
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/919876543210" class="floating-wa" target="_blank" title="WhatsApp Us">📱</a>
+
+<!-- Music Toggle -->
+<button class="music-toggle" id="musicToggle" title="Toggle Music">🎵</button>
+
+<script>
+// ─── LOADER ───
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hide');
+  }, 2200);
+});
+
+// ─── CUSTOM CURSOR ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx-6}px,${my-6}px)`;
+});
+function animateRing(){
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx-18}px,${ry-18}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+document.querySelectorAll('a,button,.service-card,.product-card,.filter-btn,.package-card,.review-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(2)'; ring.style.width='60px'; ring.style.height='60px'; });
+  el.addEventListener('mouseleave', () => { ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// ─── SCROLL PROGRESS ───
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('scroll-progress').style.width = pct + '%';
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ─── REVEAL ON SCROLL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => observer.observe(el));
+
+// ─── THEME TOGGLE ───
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+  themeBtn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀ Light';
+});
+
+// ─── PARTICLES ───
+const pCanvas = document.getElementById('particles-canvas');
+const pCtx = pCanvas.getContext('2d');
+let particles = [];
+function resizeParticles(){
+  pCanvas.width = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener('resize', resizeParticles);
+class Particle{
+  constructor(){this.reset();}
+  reset(){
+    this.x = Math.random()*pCanvas.width;
+    this.y = Math.random()*pCanvas.height;
+    this.size = Math.random()*2+0.5;
+    this.speedX = (Math.random()-0.5)*0.4;
+    this.speedY = (Math.random()-0.5)*0.4;
+    this.opacity = Math.random()*0.5+0.1;
+    this.color = Math.random()>0.5 ? '#C9A96E' : '#B76E79';
+  }
+  update(){
+    this.x += this.speedX; this.y += this.speedY;
+    if(this.x<0||this.x>pCanvas.width||this.y<0||this.y>pCanvas.height) this.reset();
+  }
+  draw(){
+    pCtx.save();
+    pCtx.globalAlpha = this.opacity;
+    pCtx.fillStyle = this.color;
+    pCtx.shadowBlur = 4; pCtx.shadowColor = this.color;
+    pCtx.beginPath();
+    pCtx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    pCtx.fill();
+    pCtx.restore();
+  }
+}
+for(let i=0;i<120;i++) particles.push(new Particle());
+function animateParticles(){
+  pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  particles.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ─── HERO CANVAS (fabric wave) ───
+const hCanvas = document.getElementById('hero-canvas');
+const hCtx = hCanvas.getContext('2d');
+hCanvas.width = window.innerWidth; hCanvas.height = window.innerHeight;
+window.addEventListener('resize', () => { hCanvas.width=window.innerWidth; hCanvas.height=window.innerHeight; });
+let wt = 0;
+function drawWaves(){
+  hCtx.clearRect(0,0,hCanvas.width,hCanvas.height);
+  const colors = ['rgba(107,31,42,0.15)','rgba(183,110,121,0.1)','rgba(201,169,110,0.08)'];
+  colors.forEach((color,i) => {
+    hCtx.beginPath();
+    hCtx.moveTo(0,hCanvas.height*0.5);
+    for(let x=0;x<=hCanvas.width;x+=10){
+      const y = hCanvas.height*(0.4+i*0.08) + Math.sin(x*0.006+wt+i*1.2)*60 + Math.sin(x*0.012+wt*1.5)*30;
+      hCtx.lineTo(x,y);
+    }
+    hCtx.lineTo(hCanvas.width,hCanvas.height); hCtx.lineTo(0,hCanvas.height);
+    hCtx.closePath();
+    hCtx.fillStyle=color; hCtx.fill();
+  });
+  wt+=0.012;
+  requestAnimationFrame(drawWaves);
+}
+drawWaves();
+
+// ─── SPARKLES ───
+const sc = document.getElementById('sparklesContainer');
+for(let i=0;i<20;i++){
+  const s = document.createElement('div');
+  s.className='sparkle';
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;`;
+  sc.appendChild(s);
+}
+
+// ─── COLLECTIONS DATA ───
+const products = [
+  {cat:'bridal',name:'Rani Bridal Lehenga',desc:'Intricate zardozi embroidery on pure silk',price:'₹45,000 onwards',icon:'👰',bg:'linear-gradient(135deg,#6B1F2A,#B76E79)',badge:'New'},
+  {cat:'saree',name:'Kanjeevaram Silk Saree',desc:'Pure silk with gold zari border',price:'₹12,000 onwards',icon:'🌺',bg:'linear-gradient(135deg,#4A1520,#8B2634)'},
+  {cat:'lehenga',name:'Pearl Embroidered Lehenga',desc:'Designer ghagra with handcrafted pearls',price:'₹18,000 onwards',icon:'💃',bg:'linear-gradient(135deg,#2D0A1A,#6B1F2A)'},
+  {cat:'party',name:'Sequin Party Gown',desc:'Glamorous evening wear with sequin work',price:'₹8,000 onwards',icon:'✨',bg:'linear-gradient(135deg,#1A0A2E,#4A2060)',badge:'Trending'},
+  {cat:'saree',name:'Designer Georgette Saree',desc:'Contemporary print with embellished border',price:'₹6,500 onwards',icon:'🌸',bg:'linear-gradient(135deg,#2A1A10,#6B3A20)'},
+  {cat:'kurti',name:'Anarkali Kurti Set',desc:'Floor-length anarkali with palazzo',price:'₹3,500 onwards',icon:'👗',bg:'linear-gradient(135deg,#0A2A1A,#1A6B3A)'},
+  {cat:'gown',name:'Indo-Western Gown',desc:'Fusion wear with floral embroidery',price:'₹11,000 onwards',icon:'🌹',bg:'linear-gradient(135deg,#1A1020,#4A206B)',badge:'Exclusive'},
+  {cat:'bridal',name:'Mughal Bridal Set',desc:'Heavily embroidered bridal lehenga choli',price:'₹65,000 onwards',icon:'🏰',bg:'linear-gradient(135deg,#3D1020,#8B2050)'},
+  {cat:'kids',name:'Kids Lehenga Set',desc:'Adorable festive wear for little princesses',price:'₹2,500 onwards',icon:'🎀',bg:'linear-gradient(135deg,#2A0A2A,#6B1A6B)'},
+  {cat:'party',name:'Velvet Palazzo Set',desc:'Royal velvet with golden embroidery',price:'₹7,500 onwards',icon:'💫',bg:'linear-gradient(135deg,#1A0A10,#3D1030)'},
+  {cat:'lehenga',name:'Pastel Floral Lehenga',desc:'Soft floral print with mirror work',price:'₹14,000 onwards',icon:'🌼',bg:'linear-gradient(135deg,#1A0A15,#5A2040)',badge:'Popular'},
+  {cat:'saree',name:'Banarasi Silk Saree',desc:'Handwoven Banarasi with gold brocade',price:'₹15,000 onwards',icon:'🪷',bg:'linear-gradient(135deg,#2A1510,#6B3520)'},
+];
+
+function renderCollections(filter='all'){
+  const grid = document.getElementById('collectionsGrid');
+  const items = filter==='all' ? products : products.filter(p=>p.cat===filter);
+  grid.innerHTML = items.map(p=>`
+    <div class="product-card reveal">
+      <div class="product-img" style="background:${p.bg};">
+        <div class="product-placeholder">${p.icon}<span style="font-size:0.75rem;letter-spacing:0.2em;color:rgba(253,248,240,0.5);">${p.name}</span></div>
+        ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+        <div class="product-overlay"><button class="btn-view">View Details</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-price">${p.price}</div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+}
+renderCollections();
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCollections(btn.dataset.filter);
+  });
+});
+
+// ─── FEATURED CAROUSEL ───
+const featured = [
+  {name:'Crimson Wedding Lehenga',fabric:'Pure Silk',work:'Zardozi',colors:['#8B1A2A','#C9A96E','#F0C4CB'],price:'₹55,000',icon:'👰'},
+  {name:'Gold Tissue Saree',fabric:'Tissue Silk',work:'Kantha',colors:['#C9A96E','#FFFFFF','#B76E79'],price:'₹22,000',icon:'🌺'},
+  {name:'Midnight Blue Gown',fabric:'Georgette',work:'Sequin',colors:['#1A1A4A','#C9A96E','#4040A0'],price:'₹18,500',icon:'💃'},
+  {name:'Peacock Anarkali',fabric:'Art Silk',work:'Resham',colors:['#1A4A2A','#C9A96E','#2A7A4A'],price:'₹12,000',icon:'🦚'},
+  {name:'Ivory Pearl Lehenga',fabric:'Crepe',work:'Pearl Work',colors:['#F5F0E8','#C9A96E','#E8C882'],price:'₹28,000',icon:'✨'},
+];
+const track = document.getElementById('carouselTrack');
+track.innerHTML = featured.map(f=>`
+  <div class="featured-card">
+    <div class="featured-img" style="background:linear-gradient(135deg,rgba(107,31,42,0.5),rgba(183,110,121,0.4));">
+      <span style="font-size:6rem;filter:drop-shadow(0 0 20px var(--gold));">${f.icon}</span>
+    </div>
+    <div class="featured-info">
+      <h3>${f.name}</h3>
+      <div class="featured-meta">
+        <div class="meta-item"><strong>Fabric</strong>${f.fabric}</div>
+        <div class="meta-item"><strong>Work</strong>${f.work}</div>
+      </div>
+      <div class="color-dots">${f.colors.map(c=>`<div class="color-dot" style="background:${c};"></div>`).join('')}</div>
+      <div class="featured-price">Starting ${f.price}</div>
+    </div>
+  </div>
+`).join('');
+let carouselIndex=0;
+const totalCards=featured.length;
+function getVisibleCount(){return window.innerWidth<700?1:window.innerWidth<1000?2:3;}
+function moveCarousel(dir){
+  const vc=getVisibleCount();
+  carouselIndex=Math.max(0,Math.min(carouselIndex+dir,totalCards-vc));
+  const cardW=track.querySelector('.featured-card').offsetWidth+32;
+  track.style.transform=`translateX(-${carouselIndex*cardW}px)`;
+}
+document.getElementById('carouselPrev').addEventListener('click',()=>moveCarousel(-1));
+document.getElementById('carouselNext').addEventListener('click',()=>moveCarousel(1));
+
+// ─── TESTIMONIALS ───
+const reviews=[
+  {text:"I wore a Vaishnavi lehenga for my wedding and received compliments all day. The craftsmanship is truly extraordinary. The team understood my vision perfectly and delivered beyond my expectations.",stars:5,name:"Priya Sharma",loc:"Nellore",avatar:"👩"},
+  {text:"The custom stitching service is exceptional. My blouse fit like a dream. The team was patient, professional and incredibly skilled. I will never go anywhere else for my designer wear.",stars:5,name:"Anitha Reddy",loc:"Guntur",avatar:"👩‍🦱"},
+  {text:"Absolutely stunning collection! From sarees to lehengas, every piece is a work of art. I found my dream reception gown here. The quality and attention to detail is unmatched in Nellore.",stars:5,name:"Kavitha Rao",loc:"Vijayawada",avatar:"👩‍🦰"},
+  {text:"Vaishnavi Boutique made my daughter's first birthday so special with an adorable lehenga set. The kids collection is just as premium as the adult collection. Truly a luxury experience!",stars:5,name:"Sunitha Devi",loc:"Nellore",avatar:"🧑‍🤝‍🧑"},
+  {text:"The bridal package was worth every rupee. From the initial consultation to the final fitting, everything was perfection. My bridal look got so many compliments. Thank you Vaishnavi!",stars:5,name:"Meena Krishnan",loc:"Chennai",avatar:"👩‍🦳"},
+  {text:"Found an exquisite Kanjeevaram saree here that I couldn't find anywhere else. The staff is knowledgeable and really helped me choose what suited me best. Will definitely be back!",stars:5,name:"Lalitha Venkat",loc:"Hyderabad",avatar:"👩"},
+];
+document.getElementById('testimonialsGrid').innerHTML=reviews.map(r=>`
+  <div class="review-card reveal">
+    <div class="quote-mark">"</div>
+    <div class="review-text">${r.text}</div>
+    <div class="review-stars">${'★'.repeat(r.stars)}</div>
+    <div class="reviewer">
+      <div class="reviewer-avatar">${r.avatar}</div>
+      <div>
+        <div class="reviewer-name">${r.name}</div>
+        <div class="reviewer-loc">${r.loc}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
+document.querySelectorAll('#testimonialsGrid .reveal').forEach(el=>observer.observe(el));
+
+// ─── MUSIC TOGGLE (visual only) ───
+const mt=document.getElementById('musicToggle');
+mt.addEventListener('click',()=>{
+  mt.classList.toggle('playing');
+  mt.textContent=mt.classList.contains('playing')?'🎶':'🎵';
+});
+
+// ─── PARALLAX ───
+window.addEventListener('scroll',()=>{
+  const sy=window.scrollY;
+  const heroContent=document.querySelector('.hero-content');
+  if(heroContent) heroContent.style.transform=`translateY(${sy*0.3}px)`;
+});
+
+// ─── FORM SUBMIT ───
+document.querySelector('.btn-book').addEventListener('click',()=>{
+  const btn=document.querySelector('.btn-book');
+  btn.textContent='✦ Appointment Booked! We\'ll Contact You Soon ✦';
+  btn.style.background='linear-gradient(135deg,#1A6B3A,#2A8B50)';
+  setTimeout(()=>{
+    btn.textContent='✦ Book Appointment Now ✦';
+    btn.style.background='';
+  },4000);
+});
+
+// ─── ANIMATED COUNTER ───
+function animateCounter(el,target){
+  let current=0;const step=target/60;
+  const timer=setInterval(()=>{
+    current=Math.min(current+step,target);
+    el.textContent=Math.floor(current)+(el.dataset.suffix||'');
+    if(current>=target)clearInterval(timer);
+  },30);
+}
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const nums=e.target.querySelectorAll('.stat-num');
+      nums[0]&&animateCounter(nums[0],500);
+      nums[1]&&animateCounter(nums[1],2000);
+      nums[2]&&animateCounter(nums[2],10);
+      counterObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+const statsEl=document.querySelector('.about-stats');
+if(statsEl)counterObs.observe(statsEl);
+</script>
+</body>
+</html>
